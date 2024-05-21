@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <title>FAQ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .faq-item {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+
+        .faq-question {
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .faq-answer {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .toggle-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href='/'><i class="fas fa-arrow-left"></i> </a>  
+        <h1>Frequently Asked Questions</h1>
+        <ul>
+            {% for faq in faqs %}
+                <li class="faq-item">
+                    <div class="faq-question" onclick="toggleAnswer('{{ faq.id }}')">{{ faq.question }}</div>
+                    <div class="faq-answer" id="faq-{{ faq.id }}-answer">{{ faq.answer }}</div>
+                    <button class="toggle-button" onclick="toggleAnswer('{{ faq.id }}')">See Answer</button>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script>
+        function toggleAnswer(faqId) {
+            var answerDiv = document.getElementById('faq-' + faqId + '-answer');
+            if (answerDiv.style.display === 'none') {
+                answerDiv.style.display = 'block';
+            } else {
+                answerDiv.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

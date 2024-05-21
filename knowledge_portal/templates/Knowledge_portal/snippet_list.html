@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <title>Code Snippets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .snippet {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+            position: relative; /* Added for positioning the button */
+        }
+
+        .snippet-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .snippet-language {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .code-container {
+            border: 1px solid #ccc;
+            background-color: #f5f5f5;
+            padding: 10px;
+            overflow-x: auto;
+            max-width: 600px; /* Adjust as needed */
+            white-space: nowrap;
+        }
+
+        .code {
+            white-space: pre-wrap;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .snippet-author {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .snippet-date {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href='/'><i class="fas fa-arrow-left"></i> </a>  
+        <h1>Code Snippets</h1>
+        <ul>
+            {% for snippet in snippets %}
+                <li class="snippet">
+                    <button class="copy-button" onclick="copyToClipboard('{{ snippet.code }}')">Copy</button>
+                    <div class="snippet-title">{{ snippet.title }}</div>
+                    <div class="snippet-language">{{ snippet.language }}</div>
+                    <div class="code-container">
+                        <code class="code">{{ snippet.code }}</code>
+                    </div>
+                    <div class="snippet-author">Author: {{ snippet.author }}</div>
+                    <div class="snippet-date">Date: {{ snippet.created_at }}</div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script>
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('Code copied to clipboard');
+        }
+    </script>
+</body>
+</html>

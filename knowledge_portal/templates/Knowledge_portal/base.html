@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Add jQuery for easier DOM manipulation -->
+
+    <style>
+        /* Custom CSS styles */
+        /* Add your custom styles here */
+        .search-form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px; /* Add margin-bottom to push the form away from the section */
+        }
+        
+h1 {
+  color: hsl(0, 0%, 28%);
+  font-size: 50px;
+  font-weight: bold;
+  font-family: monospace;
+  letter-spacing: 7px;
+  cursor: pointer;
+}
+
+h1 span {
+  transition: 0.5s ease-out;
+}
+h1:hover span:nth-child(1) {
+  margin-right: 5px;
+}
+h1:hover span:nth-child(1):after {
+  content: "'";
+}
+h1:hover span:nth-child(2) {
+  margin-left: 30px;
+}
+h1:hover span {
+  color: #fff;
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #fff;
+}
+
+.ani {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 10vh;
+  font-family: Arial;
+  font-size: 1.5rem;
+  line-height: 150%;
+}
+
+.spoiler {
+  color: transparent;
+  background-position: right;
+  background-size: 100% 100%;
+  background-image: linear-gradient(#a0aec0, #a0aec0);
+  display: inline;
+  background-repeat: no-repeat;
+  transition: all 500ms ease-in-out;
+}
+.spoiler:hover {
+  color: #000;
+  background-size: 0% 100%;
+}
+.sidebar {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.sidebar-inner {
+    margin-top: 20px;
+}
+
+.sidebar-widget h3 {
+    color: #333;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+.feature-list li {
+    margin-bottom: 10px;
+}
+
+.feature-list a {
+    color: #555;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.feature-list a:hover {
+    color: #007bff;
+}
+
+.feature-list a i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.feature-list a span {
+    font-size: 16px;
+}
+.text-content {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+.text-content p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #555;
+}
+
+.text-content p {
+    margin-bottom: 20px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #555;
+    font-family: 'Roboto', sans-serif; /* Example of a stylish font */
+    padding: 15px;
+    background-color: #f9f9f9; /* Subtle background color */
+    border-radius: 8px;
+    border: 1px solid #ddd; /* Add a border for visual separation */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+}
+
+    </style>
+</head>
+<body>
+
+<!-- Navigation Section -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">DevPortal</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'create_post' %}">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                </li>
+    
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <p class="nav-link">Welcome, {{ request.user.username }}</p>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Signup</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<!-- Hero Section -->
+<section class="hero d-flex align-items-center justify-content-center text-center">
+    <div class="container" >
+        <h1 class="display-4"><span>Welcome</span>  to <span> DevPortal</span></h1>
+    <div class="ani">
+<p class="spoiler">Your ultimate destination for software development knowledge and collaboration.</p>
+    </div>
+</div>
+</section>
+
+<!-- Search form -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+    <form action="{% url "search" %}" method="GET" class="search-form">
+        <input class="d-flex"  name="keyword" type="text" placeholder="Search" required>
+        <button class="btn btn-primary">Search</button>
+    </form>
+</div>
+</div>
+</div>
+
+
+<div class="container">
+<div class="row">
+<div class="col-md-3">
+<aside class="sidebar">
+    <div class="sidebar-inner">
+        <div class="sidebar-widget">
+            <h3>Features</h3>
+            <ul class="feature-list">
+                <li>
+                    <a href="{% url "communications" %}">
+                        <i class="fas fa-comment-dots"></i>
+                        <span>Real-Time Chat</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url "email" %}">
+                        <i class="fas fa-comment"></i>
+                        <span>Instance Message</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url "upload_file" %}">
+                        <i class="far fa-file"></i>
+                        <span>Files</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url "homepage" %}">
+                        <i class="fas fa-users"></i>
+                        <span>Discussion</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="mailto:?subject=Subject%20of%20the%20email&body=Body%20of%20the%20email">
+                        <i class="fas fa-envelope fa-3x"></i>
+                        <span>Emailing</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url "faq_list" %}">
+                        <i class="fas fa-question-circle"></i>
+                        <span>FAQs</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url "snippet_list" %}">
+                        <i class="fab fa-codepen"></i>
+                        <span>Codesnipts</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url "editor" %}">
+                        <i class="fas fa-pen"></i>
+                        <span>Writing Text</span>
+                    </a>
+                </li>
+               
+                <li>
+                    <a href="{% url "article_list" %}">
+                        <i class="fas fa-book fa-3x"></i>
+                        <span>Knowledge Base</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+       
+    </div>
+</aside>
+</div>
+<div class="col-md-9">
+    <!-- Text paragraphs -->
+    <div class="text-content">
+        <p>A software developer knowledge portal is a centralized platform designed to provide developers with access to a wide range of resources, tools, and information to support their learning and professional growth.</p>
+        
+        <ul>
+            <li><strong>Code Snippets and Examples:</strong> Offer a repository of code snippets, sample projects, and real-world examples that developers can reference to learn best practices, solve common coding problems, and accelerate their development workflow.</li>
+            <li><strong>Community Interaction:</strong> Facilitate community engagement through forums, discussion boards, Q&A sections, or chat rooms where developers can ask questions, share insights, collaborate on projects, and network with peers and experts in the field.</li>
+            <li><strong>News and Updates:</strong> Keep developers informed about the latest trends, technologies, updates, and industry news through curated articles, blog posts, newsletters, and RSS feeds from reputable sources.</li>
+            <li><strong>Personalization and Customization:</strong> Allow developers to personalize their experience by creating user profiles, saving favorite resources, bookmarking articles, setting preferences, and receiving tailored recommendations based on their interests and expertise.</li>
+            <li><strong>Accessibility and Mobile Responsiveness:</strong> Ensure that the portal is accessible to developers of all backgrounds and abilities by adhering to web accessibility standards and optimizing the user experience for various devices, screen sizes, and browsers.</li>
+        </ul>
+    </div>
+
+</div>
+</div>
+
+
+<!-- Chatbot Widget -->
+<div id="chatbot-widget" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+    <button id="chatbot-toggle" class="btn btn-blak"><i class="fas fa-comment"></i> Help Desk</button>
+</div>
+
+<!-- End of Chatbot Widget -->
+
+<!-- Your existing HTML code -->
+{% comment %} <button onclick="openChatbot()">Chat with our bot</button> {% endcomment %}
+
+<script>
+function openChatbot() {
+    var width = 600;
+    var height = 400;
+    var left = (screen.width - width) / 2;
+    var top = (screen.height - height) / 2;
+    var url = "https://app.agentx.so/community/agent/66224e7e0db109dcd23ffbd1";
+    window.open(url, "Chatbot", "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top);
+}
+</script>
+
+<script>
+    // JavaScript to toggle the chatbot window
+    $(document).ready(function(){
+        $("#chatbot-toggle").click(function(){
+            openChatbot();
+        });
+    });
+</script>
+
+<!-- navabar mobile responsive -->
+
+<script>
+    // JavaScript to toggle the dropdown menu on smaller screens
+    $(document).ready(function(){
+        $(".navbar-toggler").click(function(){
+            $(".dropdown-menu").toggleClass("show");
+        });
+    });
+</script>
+
+{% block content %}
+{% endblock %}
+{% comment %} {% block content %}
+    {% endblock %} {% endcomment %}
+<!-- Footer -->
+<footer class="footer-expand-lg bg-dark text-white text-center py-4">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 mx-auto">
+                <span class="text-white">© 2024 DevPortal. All rights reserved.</span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
+  </body>
+</html>
